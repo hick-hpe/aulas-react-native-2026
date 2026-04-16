@@ -9,8 +9,21 @@ npx expo install react-native-web // para web
 2 - app.json:
 scheme: meuApp
 
+
 // facilita o deep linking
 abrir dietamente uma tela (sem apssar pelas outras. ex /produtos/123)
+
+
+  "experiments": {
+    "typedRoutes": true
+  }
+
+  // ajuda o ts 
+  Isso ativa rotas tipadas (typed routes) no Expo Router.
+
+O que são rotas tipadas?
+
+São rotas com tipagem automática do TypeScript, ou seja
 
 
 3 - babel.config.js (Babel, transpilador de JavaScript)
