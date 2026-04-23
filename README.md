@@ -1,3 +1,3 @@
 # App Biscoito da Sorte
 
-Projeto simples sobre um biscoito da sorte. Ao abrir, é exibido uma mensagem.
+Projeto simples sobre um biscoito da sorte. Quando o usuário abre o biscoito, é exibido uma mensagem.
