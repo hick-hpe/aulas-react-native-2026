@@ -1,21 +1,30 @@
-import { Component, useState } from 'react';
+// importações
+import { Component } from 'react';
 import { Image, View, Text, StyleSheet } from 'react-native';
 
+// definição das props do componente
 interface BiscoitoProps {
     aberto: boolean
 }
 
+// definição do estado do componente
 interface State {
     fraseAtual: string
 }
 
+// definição do componente do biscoito
 export class BiscoitoContainer extends Component<BiscoitoProps, State> {
 
-    state: State = {
-        fraseAtual: ''
-    };
+    // definição do estado inicial no construtor
+    constructor(props: BiscoitoProps) {
+        super(props);
+        this.state = {
+            fraseAtual: ''
+        };
+    }
 
-    obterFrase = (): string => {
+    // função para obter uma frase aleatória
+    obterFraseAleatoria = (): string => {
         const listaFrases = [
             "Grandes oportunidades estão a caminho.",
             "Uma surpresa agradável vai alegrar seu dia.",
@@ -29,40 +38,57 @@ export class BiscoitoContainer extends Component<BiscoitoProps, State> {
             "Seu esforço será recompensado."
         ];
 
-        const index = (Math.floor(Math.random() * (listaFrases.length - 1)));
+        const index = (Math.floor(Math.random() * listaFrases.length));
         return listaFrases[index];
     };
 
+    // função para atualizar a frase atual com uma nova frase aleatória
+    atribuirFrase = () => {
+        this.setState({ fraseAtual: this.obterFraseAleatoria() });
+    }
+
+    // função para limpar a frase atual
+    limparFrase = () => {
+        this.setState({ fraseAtual: '' });
+    };
+
     render() {
+        // obter o estado do biscoito (aberto ou fechado)
         const { aberto } = this.props;
 
+        // definir os caminhos das imagens do biscoito aberto e fechado
         const imgAberto = `../assets/biscoitoAberto.png`;
         const imgFechado = `../assets/biscoitoFechado.png`;
 
+        // atualizar a frase atual com uma nova frase aleatória quando o biscoito for aberto
         if (aberto && this.state.fraseAtual === '') {
-            this.setState({ fraseAtual: this.obterFrase() });
+            this.atribuirFrase();
         }
 
+        // limpar a frase atual quando o biscoito for fechado
         if (!aberto && this.state.fraseAtual !== '') {
-            this.setState({ fraseAtual: '' });
+            this.limparFrase();
         }
 
         return (
             <View>
                 <Image
                     source={
+                        // exibir a imagem do biscoito aberto ou fechado com base no estado do biscoito
                         this.props.aberto
                             ? require(imgAberto)
                             : require(imgFechado)
                     }
                     style={{ width: 300, height: 300 }}
                 />
+                {/* exibir a frase atual */}
                 <Text style={styles.frase}>{this.state.fraseAtual}</Text>
             </View>
         );
     }
 }
 
+// estilos do componente
 const styles = StyleSheet.create({
     frase: {
         textAlign: 'center',

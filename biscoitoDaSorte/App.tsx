@@ -1,46 +1,52 @@
+// importações
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { BiscoitoContainer } from './src/components/BiscoitoContainer';
 import { Component } from 'react';
 
-export default class App extends Component {
-  state = {
-    estaAberto: false
+// definição do estado do componente
+interface State {
+  aberto: boolean
+}
+
+// definição do componente principal
+export default class App extends Component<{}, State> {
+
+  // definição do estado inicial
+  state: State = {
+    aberto: false
   };
 
-  setEstado = () => {
-    this.setState({ estaAberto: !this.state.estaAberto });
+  // função para alternar o estado do biscoito
+  toggleBiscoito = () => {
+    this.setState(prevState => ({ aberto: !prevState.aberto }));
   }
 
-  reiniciar = () => {
-    this.setState({ estaAberto: false });
-  }
-
+  // renderização do componente
   render() {
     return (
       <View style={styles.container}>
+        {/* título do aplicativo */}
         <Text style={styles.title}>Teste sua sorte!!!</Text>
 
-        <BiscoitoContainer aberto={this.state.estaAberto} />
+        {/* componente do biscoito */}
+        <BiscoitoContainer aberto={this.state.aberto} />
 
+        {/* botões de ação */}
         <View style={styles.containerButtons}>
-          {
-            !this.state.estaAberto
-              ? (
-                <TouchableOpacity onPress={this.setEstado} style={styles.button}>
-                  <Text style={styles.textButton}>Abrir biscoito</Text>
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity onPress={this.reiniciar} style={styles.button}>
-                  <Text style={styles.textButton}>Reiniciar</Text>
-                </TouchableOpacity>
-              )
-          }
+          {/* botão para abrir/reiniciar o biscoito */}
+          <TouchableOpacity onPress={this.toggleBiscoito} style={styles.button}>
+            <Text style={styles.textButton}>
+              {/* alternar texto do botão de acordo com o estado */}
+              {this.state.aberto ? 'Reiniciar' : 'Abrir biscoito'}
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
   }
 }
 
+// estilos do componente
 const styles = StyleSheet.create({
   container: {
     flex: 1,
