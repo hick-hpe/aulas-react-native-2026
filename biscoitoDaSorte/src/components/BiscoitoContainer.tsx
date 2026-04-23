@@ -1,18 +1,13 @@
 import { Component, useState } from 'react';
-import { Image, View, Text } from 'react-native';
+import { Image, View, Text, StyleSheet } from 'react-native';
 
 interface BiscoitoProps {
     aberto: boolean
 }
 
-export class ImageCookie extends Component<BiscoitoProps> {
-    state = {
-        frase: ''
-    };
+export class BiscoitoContainer extends Component<BiscoitoProps> {
 
-    setFrase = (frase: string) => {
-        this.setState({ frase });
-    }
+    fraseAtual = '';
 
     obterFrase = (): string => {
         const listaFrases = [
@@ -33,16 +28,17 @@ export class ImageCookie extends Component<BiscoitoProps> {
     };
 
     render() {
+        const { aberto } = this.props;
+
         const imgAberto = `../assets/biscoitoAberto.png`;
         const imgFechado = `../assets/biscoitoFechado.png`;
-        const estaAberto = this.props.aberto;
+        
+        if (aberto && this.fraseAtual === '') {
+            this.fraseAtual = this.obterFrase();
+        }
 
-        if (estaAberto) {
-            const f = this.obterFrase();
-            console.log(f);
-            this.setFrase({frase});
-        } else {
-            this.setFrase('');
+        if (!aberto && this.fraseAtual !== '') {
+            this.fraseAtual = '';
         }
 
         return (
@@ -55,10 +51,19 @@ export class ImageCookie extends Component<BiscoitoProps> {
                     }
                     style={{ width: 300, height: 300 }}
                 />
-                <Text>{estaAberto ? 'Aberto' : 'Fechado'}</Text>
-                <Text>{this.state.frase}</Text>
+                <Text style={styles.frase}>{this.fraseAtual}</Text>
             </View>
         );
     }
 }
 
+const styles = StyleSheet.create({
+    frase: {
+        textAlign: 'center',
+        fontSize: 16,
+        color: '#374151',
+        marginTop: 10,
+        paddingHorizontal: 20,
+        minHeight: 40
+    }
+});

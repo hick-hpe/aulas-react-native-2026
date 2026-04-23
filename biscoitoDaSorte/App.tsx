@@ -1,30 +1,41 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ImageCookie } from './src/components/ImageCookie';
+import { BiscoitoContainer } from './src/components/BiscoitoContainer';
 import { Component } from 'react';
-
-interface Props {
-  setEstado: (estado: boolean) => void;
-}
 
 export default class App extends Component {
   state = {
-    estado: false
+    estaAberto: true
   };
 
   setEstado = () => {
-    this.setState({ estado: !this.state.estado });
+    this.setState({ estaAberto: !this.state.estaAberto });
+  }
+
+  reiniciar = () => {
+    this.setState({ estaAberto: false });
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>Teste sua sorte!!!</Text>
+        <Text style={styles.title}>Teste sua sorte!!!</Text>
 
-        <ImageCookie aberto={this.state.estado} />
+        <BiscoitoContainer aberto={this.state.estaAberto} />
 
-        <TouchableOpacity onPress={this.setEstado}>
-          <Text>Abrir biscoito</Text>
-        </TouchableOpacity>
+        <View style={styles.containerButtons}>
+          {
+            !this.state.estaAberto
+              ? (
+                <TouchableOpacity onPress={this.setEstado} style={styles.button}>
+                  <Text style={styles.textButton}>Abrir biscoito</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity onPress={this.reiniciar} style={styles.button}>
+                  <Text style={styles.textButton}>Reiniciar</Text>
+                </TouchableOpacity>
+              )
+          }
+        </View>
       </View>
     );
   }
@@ -33,8 +44,35 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F3F4F6',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20
   },
+
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#111827'
+  },
+
+  containerButtons: {
+    flexDirection: 'row',
+    marginTop: 25
+  },
+
+  button: {
+    backgroundColor: '#374151',
+    paddingVertical: 12,
+    paddingHorizontal: 18,
+    borderRadius: 8,
+    elevation: 3
+  },
+
+  textButton: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600'
+  }
 });
