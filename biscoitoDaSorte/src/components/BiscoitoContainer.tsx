@@ -5,9 +5,15 @@ interface BiscoitoProps {
     aberto: boolean
 }
 
-export class BiscoitoContainer extends Component<BiscoitoProps> {
+interface State {
+    fraseAtual: string
+}
 
-    fraseAtual = '';
+export class BiscoitoContainer extends Component<BiscoitoProps, State> {
+
+    state: State = {
+        fraseAtual: ''
+    };
 
     obterFrase = (): string => {
         const listaFrases = [
@@ -32,13 +38,13 @@ export class BiscoitoContainer extends Component<BiscoitoProps> {
 
         const imgAberto = `../assets/biscoitoAberto.png`;
         const imgFechado = `../assets/biscoitoFechado.png`;
-        
-        if (aberto && this.fraseAtual === '') {
-            this.fraseAtual = this.obterFrase();
+
+        if (aberto && this.state.fraseAtual === '') {
+            this.setState({ fraseAtual: this.obterFrase() });
         }
 
-        if (!aberto && this.fraseAtual !== '') {
-            this.fraseAtual = '';
+        if (!aberto && this.state.fraseAtual !== '') {
+            this.setState({ fraseAtual: '' });
         }
 
         return (
@@ -51,7 +57,7 @@ export class BiscoitoContainer extends Component<BiscoitoProps> {
                     }
                     style={{ width: 300, height: 300 }}
                 />
-                <Text style={styles.frase}>{this.fraseAtual}</Text>
+                <Text style={styles.frase}>{this.state.fraseAtual}</Text>
             </View>
         );
     }

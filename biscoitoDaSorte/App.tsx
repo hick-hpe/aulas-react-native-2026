@@ -4,7 +4,7 @@ import { Component } from 'react';
 
 export default class App extends Component {
   state = {
-    estaAberto: true
+    estaAberto: false
   };
 
   setEstado = () => {
