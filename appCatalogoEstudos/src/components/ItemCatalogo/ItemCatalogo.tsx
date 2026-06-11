@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 interface ItemCatalogoProps {
@@ -6,16 +6,17 @@ interface ItemCatalogoProps {
   descricao: string;
 }
 
-export default function ItemCatalogo({
-  nome,
-  descricao,
-}: ItemCatalogoProps) {
-  return (
-    <View style={styles.card}>
-      <Text style={styles.nome}>{nome}</Text>
-      <Text style={styles.descricao}>{descricao}</Text>
-    </View>
-  );
+export default class ItemCatalogo extends Component<ItemCatalogoProps> {
+  render() {
+    const { nome, descricao } = this.props;
+
+    return (
+      <View style={styles.card}>
+        <Text style={styles.nome}>{nome}</Text>
+        <Text style={styles.descricao}>{descricao}</Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
